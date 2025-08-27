@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XAPOMIND Admin Panel</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+  <!-- Authentication Screen -->
+  <div id="auth-screen" class="auth-container">
+    <div class="auth-box">
+      <div class="logo">
+        <i class="fas fa-brain"></i>
+        <h1>XAPOMIND</h1>
+      </div>
+      <form id="login-form">
+        <div class="input-group">
+          <label for="admin-id">Admin ID</label>
+          <input type="text" id="admin-id" required>
+        </div>
+        <div class="input-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" required>
+        </div>
+        <button type="submit">Login</button>
+        <div id="attempts-message" class="attempts-message"></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Admin Panel (hidden initially) -->
+  <div id="admin-panel" class="admin-panel hidden">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">
+        <i class="fas fa-brain"></i>
+        <h1>XAPOMIND</h1>
+      </div>
+      <button id="logout-btn" class="logout-btn">Logout <i class="fas fa-sign-out-alt"></i></button>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Dashboard Stats -->
+      <section class="dashboard-stats">
+        <div class="stat-card">
+          <div class="stat-icon users">
+            <i class="fas fa-users"></i>
+          </div>
+          <div class="stat-info">
+            <h3 id="total-users">0</h3>
+            <p>Registered Users</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon views">
+            <i class="fas fa-eye"></i>
+          </div>
+          <div class="stat-info">
+            <h3 id="total-views">0</h3>
+            <p>Total Views</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon redeemed">
+            <i class="fas fa-gift"></i>
+          </div>
+          <div class="stat-info">
+            <h3 id="total-redeemed">0</h3>
+            <p>Rewards Redeemed</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon export">
+            <i class="fas fa-file-export"></i>
+          </div>
+          <div class="stat-info">
+            <h3>Export Data</h3>
+            <div class="export-buttons">
+              <button id="export-users">Users</button>
+              <button id="export-rewards">Rewards</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tabs Navigation -->
+      <nav class="tabs">
+        <button class="tab-btn active" data-tab="new-users">New Users</button>
+        <button class="tab-btn" data-tab="user-growth">User Growth</button>
+        <button class="tab-btn" data-tab="reward-requests">Reward Requests</button>
+        <button class="tab-btn" data-tab="reward-history">Reward History</button>
+        <button class="tab-btn" data-tab="archive">Archive Data</button>
+      </nav>
+
+      <!-- Tab Contents -->
+      <div class="tab-content">
+        <!-- New Users Tab -->
+        <div id="new-users" class="tab-pane active">
+          <div class="section-header">
+            <h2>Newly Registered Users</h2>
+            <div class="search-box">
+              <input type="text" id="user-search" placeholder="Search users...">
+              <i class="fas fa-search"></i>
+            </div>
+          </div>
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>User ID</th>
+                  <th>Full Name</th>
+                  <th>Email</th>
+                  <th>Mobile</th>
+                  <th>Gender</th>
+                  <th>Registered On</th>
+                </tr>
+              </thead>
+              <tbody id="new-users-table">
+                <!-- Data will be populated by JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- User Growth Tab -->
+        <div id="user-growth" class="tab-pane">
+          <h2>User Growth Chart</h2>
+          <div class="chart-container">
+            <canvas id="user-growth-chart"></canvas>
+          </div>
+          <div class="chart-controls">
+            <button class="time-filter active" data-period="week">Week</button>
+            <button class="time-filter" data-period="month">Month</button>
+            <button class="time-filter" data-period="year">Year</button>
+          </div>
+        </div>
+
+        <!-- Reward Requests Tab -->
+        <div id="reward-requests" class="tab-pane">
+          <h2>Reward Requests</h2>
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>RID</th>
+                  <th>User ID</th>
+                  <th>Name</th>
+                  <th>Reward</th>
+                  <th>Method</th>
+                  <th>Details</th>
+                  <th>Action</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="reward-requests-table">
+                <!-- Data will be populated by JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Reward History Tab -->
+        <div id="reward-history" class="tab-pane">
+          <h2>Reward History</h2>
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>RID</th>
+                  <th>User ID</th>
+                  <th>Name</th>
+                  <th>Reward</th>
+                  <th>Status</th>
+                  <th>Action Time</th>
+                  <th>Rejection Reason</th>
+                </tr>
+              </thead>
+              <tbody id="reward-history-table">
+                <!-- Data will be populated by JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Archive Data Tab -->
+        <div id="archive" class="tab-pane">
+          <h2>Archive Data</h2>
+          <div class="archive-tabs">
+            <button class="archive-tab-btn active" data-archive="users">Users Archive</button>
+            <button class="archive-tab-btn" data-archive="rewards">Rewards Archive</button>
+          </div>
+
+          <div id="users-archive" class="archive-pane active">
+            <h3>Archived Users Data</h3>
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>User ID</th>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Mobile</th>
+                    <th>Gender</th>
+                    <th>Registered On</th>
+                    <th>Exported</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="archived-users-table">
+                  <!-- Data will be populated by JavaScript -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div id="rewards-archive" class="archive-pane">
+            <h3>Archived Rewards Data</h3>
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>RID</th>
+                    <th>User ID</th>
+                    <th>Name</th>
+                    <th>Reward</th>
+                    <th>Status</th>
+                    <th>Action Time</th>
+                    <th>Exported</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="archived-rewards-table">
+                  <!-- Data will be populated by JavaScript -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Rejection Modal -->
+  <div id="rejection-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Reject Reward Request</h2>
+      <form id="rejection-form">
+        <input type="hidden" id="reject-rid">
+        <div class="input-group">
+          <label for="rejection-reason">Reason for rejection</label>
+          <textarea id="rejection-reason" rows="4" required></textarea>
+        </div>
+        <button type="submit">Submit Rejection</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Test Data Button -->
+  <button id="test-data-btn" class="test-data-btn">
+    <i class="fas fa-vial"></i> Test Data
+  </button>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>
